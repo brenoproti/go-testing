@@ -28,7 +28,13 @@ func TestCalculateTaxBatch(t *testing.T) {
 		result := CalculateTax(item.amount)
 
 		if result != item.expected {
-			t.Errorf("Expected %f but got %f", item.expected, result)
+			t.Errorf("Expected %.2f but got %.2f", item.expected, result)
 		}
+	}
+}
+
+func BenchmarkCalculateTax(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		CalculateTax(500)
 	}
 }
