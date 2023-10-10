@@ -1,6 +1,7 @@
 package tax
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -60,10 +61,24 @@ func FuzzCalculateTax(f *testing.F) {
 }
 
 // Testing using testify
-
 func TestCalculateTaxTestify(t *testing.T) {
 	amount := 500.0
 	expected := 5.0
 	result := CalculateTax(amount)
 	assert.Equal(t, result, expected)
+}
+
+// Testing using mocks
+func TestCalculateTaxAndSave(t *testing.T) {
+	repository := &TextRepositoryMock{}
+	repository.On("Save", 10.0).Return(nil)
+	repository.On("Save", 0.0).Return(errors.New("error"))
+
+	err := CalculateTaxAndSave(1000.0, repository)
+	assert.Nil(t, err)
+
+	err = CalculateTaxAndSave(0, repository)
+	assert.Error(t, err)
+
+	repository.AssertExpectations(t)
 }
