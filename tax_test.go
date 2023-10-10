@@ -61,12 +61,9 @@ func FuzzCalculateTax(f *testing.F) {
 
 // Testing using testify
 
-func TestCalculateTaxFastify(t *testing.T) {
+func TestCalculateTaxTestify(t *testing.T) {
 	amount := 500.0
 	expected := 5.0
-
 	result := CalculateTax(amount)
-
 	assert.Equal(t, result, expected)
-
 }
