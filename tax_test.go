@@ -1,6 +1,10 @@
 package tax
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+)
 
 func TestCalculateTax(t *testing.T) {
 	amount := 500.0
@@ -53,5 +57,16 @@ func FuzzCalculateTax(f *testing.F) {
 
 		}
 	})
+}
+
+// Testing using testify
+
+func TestCalculateTaxFastify(t *testing.T) {
+	amount := 500.0
+	expected := 5.0
+
+	result := CalculateTax(amount)
+
+	assert.Equal(t, result, expected)
 
 }
